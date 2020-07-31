@@ -199,30 +199,24 @@ def main():
     parser.add_argument('-k', '--num_topics', nargs=1, required=False, type=int, default=50, help='Number of topics')
     parser.add_argument('-c', '--chunk_size', nargs=1, required=False, type=int, default=50, help='Chunk size')
     parser.add_argument('-p', '--passes', nargs=1, required=False, type=int, default=10, help='Number of passes')
-    parser.add_argument('-A', '--alpha', nargs=1, required=False, type=float, default='symmetric',
-                        help='Alpha parameter')
-    parser.add_argument('-B', '--beta', nargs=1, required=False, type=float, default='symmetric',
-                        help='Beta parameter')
+    parser.add_argument('-A', '--alpha', nargs=1, required=False, type=float, default=0.1, help='Alpha parameter')
+    parser.add_argument('-B', '--beta', nargs=1, required=False, type=float, default=0.1, help='Beta parameter')
     parser.add_argument('-b', '--no_below', nargs=1, required=False, type=int, default=3,
                         help='Min number of documents containing token')
     parser.add_argument('-a', '--no_above', nargs=1, required=False, type=float, default=0.3,
                         help='Max ratio of documents containing token')
     args = parser.parse_args()
     lda = LdaAnalyzer()
-    lda.get_topics_atm(label=args.label[0],
-                       num_topics=args.num_topics[0],
-                       chunk_size=args.chunk_size,
-                       passes=args.passes,
-                       alpha=args.alpha[0],
-                       beta=args.beta[0],
-                       no_below=args.no_below[0],
-                       no_above=args.no_above[0],
+    lda.get_topics_atm(label=args.label[0] if isinstance(args.label, list) else args.label,
+                       num_topics=args.num_topics[0] if isinstance(args.num_topics, list) else args.num_topics,
+                       chunk_size=args.chunk_size[0] if isinstance(args.chunk_size, list) else args.chunk_size,
+                       passes=args.passes[0] if isinstance(args.passes, list) else args.passes,
+                       alpha=args.alpha[0] if isinstance(args.alpha, list) else args.alpha,
+                       beta=args.beta[0] if isinstance(args.beta, list) else args.beta,
+                       no_below=args.no_below[0] if isinstance(args.no_below, list) else args.no_below,
+                       no_above=args.no_above[0] if isinstance(args.no_above, list) else args.no_above,
                        verbose=True)
 
 
 if __name__ == '__main__':
-    # Coherence for t=145, b=2, a=0.25, alpha=0.61, beta=0.61:		0.70
-    # python lda_analyzer.py -l A -k 145 -b 2 -a 0.25 -A 0.61 -B 0.61
-    # Coherence for t=50, b=2, a=0.4, alpha=0.01, beta=0.01:		0.43
-    # python lda_analyzer.py -l B -k 50 -b 2 -a 0.4 -A 0.01 -B 0.01
     main()

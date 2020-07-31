@@ -4,7 +4,7 @@ The `lda_analyzer.py` script generates a list of phrases associated with each ch
 medical records. This analysis uses an author-topic model (ATM), an extension of Latent Dirichlet Allocation (LDA) to 
 learn topic vectors for "authors" (i.e medical conditions) in the provided corpus.
 
-## Running the model
+## Implementation
 
 To build the model and generate the topic vectors, create and source a Python 3 virtual environment from the command 
 line in the `ch_ml_analysis` directory:
